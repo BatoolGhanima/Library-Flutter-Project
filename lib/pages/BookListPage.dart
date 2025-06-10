@@ -63,33 +63,16 @@ class BookListPage extends StatelessWidget {
               final book = books[index];
 
 
-              return ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFFE8CA),
-// shape: RoundedRectangleBorder(
-//   borderRadius: BorderRadius.circular(15)
-// ),
-elevation: 0,
-
-
-                ),
-
-                onPressed: () => {
-    Navigator.push(
-      context, 
-      MaterialPageRoute(
-        builder: (context) => DetailsPage(book: book) // تمرير بيانات الكتاب
-      )
-    )
-  },
+              return
+    
             
-                child: Card(
+                 Card(
                   
                   color: const Color(0xFFAF8260),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  elevation: 3,
+                  elevation: 5,
                   margin: EdgeInsets.all(20),
                   child: ListTile(
                    
@@ -113,10 +96,18 @@ elevation: 0,
                         color: Colors.white,
                       ),
                     ),
+                    onTap: (){
+                       Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => DetailsPage(book: book) 
+      )
+    );
+                    },
                     
                   ),
-                ),
-              );
+                );
+              
 
             },
           );

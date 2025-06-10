@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_app/pages/PdfViewerPage.dart';
 import '../modules/item.dart'; // تأكد من استيراد نموذج Book
 
 class DetailsPage extends StatefulWidget {
@@ -13,6 +14,9 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
+
+      final String pdfUrl = widget.book.pdfUrl;
+
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Color.fromARGB(255, 255, 227, 191),
@@ -34,6 +38,27 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             SizedBox(height: 20),
+ if (pdfUrl.isNotEmpty) 
+              Center(
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    textStyle: TextStyle(fontSize: 18),
+                  ),
+                  icon: Icon(Icons.menu_book),
+                  label: Text("Read Book"),
+                  onPressed: () {
+                    // Navigate to the PDF Viewer page, passing the correct URL
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PdfViewerPage(pdfUrl: pdfUrl),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
             Center(
               child: Text(
                 widget.book.name, // استخدام عنوان الكتاب من البيانات
