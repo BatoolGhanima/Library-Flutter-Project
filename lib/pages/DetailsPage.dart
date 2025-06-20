@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:library_app/pages/PdfViewerPage.dart';
 import '../modules/item.dart'; // تأكد من استيراد نموذج Book
 
@@ -18,7 +19,9 @@ class _DetailsPageState extends State<DetailsPage> {
       final String pdfUrl = widget.book.pdfUrl;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+         backgroundColor: Color.fromARGB(199, 125, 40, 0),
+),
       backgroundColor: Color.fromARGB(255, 255, 227, 191),
       body: Padding(
         padding: EdgeInsets.all(15),
@@ -62,11 +65,12 @@ class _DetailsPageState extends State<DetailsPage> {
             Center(
               child: Text(
                 widget.book.name, // استخدام عنوان الكتاب من البيانات
-                style: TextStyle(
+                style: GoogleFonts.dynaPuff(
                   color: const Color.fromARGB(255, 95, 61, 49),
                   fontSize: 30,
-                  fontFamily: "",
+                  
                   fontWeight: FontWeight.bold,
+                  
                 ),
               ),
             ),
@@ -76,15 +80,17 @@ class _DetailsPageState extends State<DetailsPage> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "Author : ",
-                    style: TextStyle(
+                    text: "Author :   ",
+                    style: GoogleFonts.dynaPuff(
                       color: const Color.fromARGB(255, 71, 47, 38),
                       fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      
                     ),
                   ),
                   TextSpan(
                     text: widget.book.author, // استخدام اسم المؤلف من البيانات
-                    style: TextStyle(color: Colors.brown),
+                    style: GoogleFonts.dynaPuff(color: Colors.brown),
                   ),
                 ],
               ),
@@ -94,15 +100,16 @@ class _DetailsPageState extends State<DetailsPage> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "Category : ",
-                    style: TextStyle(
+                    text: "Category :   ",
+                    style: GoogleFonts.dynaPuff(
                       color: const Color.fromARGB(255, 71, 47, 38),
                       fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
                   ),
                   TextSpan(
                     text: widget.book.category, // استخدام التصنيف من البيانات
-                    style: TextStyle(color: Colors.brown),
+                    style: GoogleFonts.dynaPuff(color: Colors.brown),
                   ),
                 ],
               ),
@@ -112,15 +119,16 @@ class _DetailsPageState extends State<DetailsPage> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "Added On : ",
-                    style: TextStyle(
+                    text: "Added On :   ",
+                    style: GoogleFonts.dynaPuff(
                       color: const Color.fromARGB(255, 71, 47, 38),
                       fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
                   ),
                   TextSpan(
                     text: widget.book.date.toString(), // استخدام التاريخ من البيانات
-                    style: TextStyle(color: Colors.brown),
+                    style: GoogleFonts.dynaPuff(color: Colors.brown),
                   ),
                 ],
               ),
@@ -139,7 +147,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     RichText(
                       text: TextSpan(
                         text: "About :",
-                        style: TextStyle(
+                        style: GoogleFonts.dynaPuff(
                           color: const Color.fromARGB(255, 71, 47, 38),
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -148,7 +156,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     Text(
                       widget.book.about, // استخدام الوصف من البيانات
-                      style: TextStyle(color: Colors.white),
+                      style: GoogleFonts.dynaPuff(color: Colors.white , fontSize: 16, textStyle: TextStyle( wordSpacing: 2.5)),
                     ),
                   ],
                 ),

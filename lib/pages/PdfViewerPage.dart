@@ -51,7 +51,8 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Reading Book"),
+        backgroundColor:  Color.fromARGB(199, 125, 40, 0),
+        title: Text("Reading Book") ,
       ),
       body: FutureBuilder<File>(
         future: _pdfFile,
