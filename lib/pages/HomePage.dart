@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:library_app/components/HomeComponent.dart';
 import 'package:library_app/pages/BookListPage.dart';
-import 'package:library_app/components/BookListView.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:library_app/pages/PersonalPage.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -16,7 +16,8 @@ class Homepage extends StatefulWidget {
 class _HomePageState extends State<Homepage> {
   int index = 0;
   List<Widget> list = [Homecomponent(), 
-  BookListPage()];
+  BookListPage(),
+  Personalpage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,28 +100,9 @@ appBar: AppBar(
       ),
   
 
-      backgroundColor: Color(0xFFFFE3BF),
-      body: Stack(
-        
-        
-        
-        children: [
-           Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/bookBackground.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: Container(color: Colors.black.withOpacity(0)), // تحتاج لوجود Container هنا لتفعيل الضبابية
-          ),
+      
+     body:list[index],
 
-          
-          
-          list[index]]),
       
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
@@ -139,14 +121,15 @@ appBar: AppBar(
             label: "",
           ),
           NavigationDestination(
-            icon: Icon(Icons.bookmark, color: Color(0xFFD1AE8D), size: 30),
-            label: "",
-          ),
-          NavigationDestination(
             icon: Icon(Icons.person, color: Color(0xFFD1AE8D), size: 30),
             label: "",
             
           ),
+          // NavigationDestination(
+          //   icon: Icon(Icons.bookmark, color: Color(0xFFD1AE8D), size: 30),
+          //   label: "",
+          // ),
+          
         ],
         backgroundColor: Color(0xFF5C260D),
       ),

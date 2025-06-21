@@ -20,7 +20,10 @@ class _DetailsPageState extends State<DetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: Color.fromARGB(199, 125, 40, 0),
+        iconTheme: IconThemeData(color:Color(0xFFD1AE8D) ),
+         backgroundColor: Color(0xFF5C260D),
+         title: Text("Book  Details"), titleTextStyle: GoogleFonts.dynaPuff(color:Color(0xFFD1AE8D), fontSize: 20 ),
+
 ),
       backgroundColor: Color.fromARGB(255, 255, 227, 191),
       body: Padding(
@@ -36,29 +39,42 @@ class _DetailsPageState extends State<DetailsPage> {
               height: 300,
               width: 100,
               child: Image.network(
+                
                 widget.book.image, // استخدام صورة الكتاب من البيانات
                 fit: BoxFit.cover,
               ),
             ),
             SizedBox(height: 20),
  if (pdfUrl.isNotEmpty) 
-              Center(
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                    textStyle: TextStyle(fontSize: 18),
+              Container(
+  //                decoration: BoxDecoration(
+  //   gradient: LinearGradient(
+  //     colors: [Color(0xFF5C260D), Color(0xFFD1AE8D)], // من لون إلى لون
+  //     begin: Alignment.topLeft,
+  //     end: Alignment.bottomRight,
+  //   ),
+  //   borderRadius: BorderRadius.circular(10),
+  // ),
+                child: Center(
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(207, 95, 44, 20), 
+                      padding: EdgeInsets.symmetric(horizontal:20, vertical: 10),
+                      textStyle: GoogleFonts.dynaPuff(fontSize: 15,),
+                    ),
+                    
+                    icon: Icon(Icons.import_contacts, color: Color.fromARGB(255, 255, 213, 173), size: 25,),
+                    label: Text("Read Book" , style: TextStyle( color:Color.fromARGB(255, 255, 213, 173),),),
+                    onPressed: () {
+                      // Navigate to the PDF Viewer page, passing the correct URL
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PdfViewerPage(pdfUrl: pdfUrl),
+                        ),
+                      );
+                    },
                   ),
-                  icon: Icon(Icons.menu_book),
-                  label: Text("Read Book"),
-                  onPressed: () {
-                    // Navigate to the PDF Viewer page, passing the correct URL
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PdfViewerPage(pdfUrl: pdfUrl),
-                      ),
-                    );
-                  },
                 ),
               ),
 

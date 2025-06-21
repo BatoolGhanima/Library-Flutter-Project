@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -51,8 +52,9 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color.fromARGB(199, 125, 40, 0),
-        title: Text("Reading Book") ,
+        iconTheme: IconThemeData(color:Color(0xFFD1AE8D) ),
+        backgroundColor:  Color(0xFF5C260D),
+        title: Text("Reading Book"), titleTextStyle: GoogleFonts.dynaPuff(color:Color(0xFFD1AE8D), fontSize: 20 ),
       ),
       body: FutureBuilder<File>(
         future: _pdfFile,

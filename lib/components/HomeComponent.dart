@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:library_app/components/BookListView.dart';
 
 class Homecomponent extends StatefulWidget {
@@ -16,8 +17,25 @@ class _HomecomponentState extends State<Homecomponent> {
     return Scaffold(
   
 
-      backgroundColor: Color(0xFFFFE3BF),
-      body: ListView(
+      
+      body: 
+       Stack(
+  children: [
+    Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/bookBackground.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+    BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+      child: Container(color: Colors.black.withOpacity(0)),
+    ),
+   
+  
+ListView(
         children: [
           Container(
             height: 50,
@@ -133,9 +151,9 @@ class _HomecomponentState extends State<Homecomponent> {
           )
         ],
         
-      ),
-      
-      
+      ),],
+  
+    )
     );
   }
 }

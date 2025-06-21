@@ -3,11 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:library_app/components/BookListView.dart';
-import 'package:library_app/pages/DetailsPage.dart';
 import '../modules/item.dart'; // تأكد أن ملف Book موجود ومُعرف صح
 
 class BookListPage extends StatelessWidget {
   final CollectionReference booksRef = FirebaseFirestore.instance.collection('books');
+  
+  final _formkey = GlobalKey<FormState>();
 
   final TextEditingController name = TextEditingController();
   final TextEditingController author = TextEditingController();
@@ -19,8 +20,11 @@ class BookListPage extends StatelessWidget {
   final TextEditingController pdfUrl = TextEditingController();
 
   // دالة إضافة كتاب
-  void addBook() async {
-    if (name.text.isEmpty) return;
+  void addBook(BuildContext context) async {
+    
+    if (_formkey.currentState!.validate()){
+
+   
 
     Book newBook = Book(
       name: name.text,
@@ -32,6 +36,7 @@ class BookListPage extends StatelessWidget {
       date: int.tryParse(date.text) ?? DateTime.now().year,
       pdfUrl: pdfUrl.text,
     );
+     
 
     try {
       await booksRef.add(newBook.toMap());
@@ -43,10 +48,19 @@ class BookListPage extends StatelessWidget {
       count.clear();
       pdfUrl.clear();
       date.clear();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Added new book succesfully!")));
+
     } catch (e) {
       print("Error adding book: $e");
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("An error accerd while adding")));
+
     }
   }
+  else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("There is an error in data!")));
+  }
+   }
+   
 
   @override
   Widget build(BuildContext context) {
@@ -89,26 +103,29 @@ class BookListPage extends StatelessWidget {
                             "Add Book",
                             style: TextStyle(color: Color.fromARGB(255, 125, 39, 0)),
                           ),
-                          content: SingleChildScrollView(
-                            
-                            child: Column(
-                            
-                              children: [
-                                TextField(controller: name, decoration: InputDecoration(labelText: "Book Name")),
-                                TextField(controller: author, decoration: InputDecoration(labelText: "Author Name")),
-                                TextField(controller: category, decoration: InputDecoration(labelText: "Category Name")),
-                                TextField(controller: about, decoration: InputDecoration(labelText: "About...")),
-                                TextField(controller: count, decoration: InputDecoration(labelText: "Books Count")),
-                                TextField(controller: date, decoration: InputDecoration(labelText: "Publish Year")),
-                                TextField(controller: image, decoration: InputDecoration(labelText: "Image Link")),
-                                TextField(controller: pdfUrl, decoration: InputDecoration(labelText: "PDF URL")),
-                              ],
+                          content: Form(
+                            key: _formkey,
+                            child: SingleChildScrollView(
+                              
+                              child: Column(
+                              
+                                children: [
+                                  TextFormField(controller: name, decoration: InputDecoration(labelText: "Book Name"), validator: (value) => value == null || value.isEmpty ? "required" : null,),
+                                  TextFormField(controller: author, decoration: InputDecoration(labelText: "Author Name"), validator: (value) => value == null || value.isEmpty ? "required" : null,),
+                                  TextFormField(controller: category, decoration: InputDecoration(labelText: "Category Name"), validator: (value) => value == null || value.isEmpty ? "required" : null,),
+                                  TextFormField(controller: about, decoration: InputDecoration(labelText: "About..."), validator: (value) => value == null || value.isEmpty ? "required" : null,),
+                                  TextFormField(controller: count, decoration: InputDecoration(labelText: "Books Count"), validator: (value) => value == null || value.isEmpty ? "required" : null,),
+                                  TextFormField(controller: date, decoration: InputDecoration(labelText: "Publish Year"), validator: (value) => value == null || value.isEmpty ? "required" : null,),
+                                  TextFormField(controller: image, decoration: InputDecoration(labelText: "Image Link")),
+                                  TextFormField(controller: pdfUrl, decoration: InputDecoration(labelText: "PDF URL"), validator: (value) => value == null || value.isEmpty ? "required" : null,),
+                                ],
+                              ),
                             ),
                           ),
                           actions: [
                             TextButton(
                               onPressed: () {
-                                addBook();
+                                addBook(context);
                                 Navigator.pop(context);
                               },
                               child: Text("Add" ,style: TextStyle(color: Color.fromARGB(221, 92, 38, 13), fontSize: 16 ),),
