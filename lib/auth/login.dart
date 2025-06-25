@@ -64,10 +64,11 @@ class _LoginState extends State<Login> {
                       topLeft: Radius.circular(75),
                     ),
                   ),
-                  child: Column(
+                  child: ListView(
                     children: [
                       SizedBox(height: 20),
                       Text(
+                        textAlign: TextAlign.center,
                         "SING IN",
                         style: TextStyle(
                           fontSize: 30,
@@ -76,6 +77,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Text(
+                        textAlign: TextAlign.center,
                         "Welcome back ! Nice to see you again",
                         style: TextStyle(
                           fontSize: 15,

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:library_app/components/BookListView.dart';
-import '../modules/item.dart'; // تأكد أن ملف Book موجود ومُعرف صح
+import 'package:library_app/modules/Book.dart';
 
 class BookListPage extends StatelessWidget {
   final CollectionReference booksRef = FirebaseFirestore.instance.collection('books');

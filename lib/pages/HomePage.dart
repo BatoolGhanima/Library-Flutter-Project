@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:library_app/components/HomeComponent.dart';
+import 'package:library_app/components/drawerUser.dart';
 import 'package:library_app/pages/BookListPage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_app/pages/PersonalPage.dart';
@@ -36,68 +37,7 @@ appBar: AppBar(
     ),
   ),
 ),
-     drawer: Drawer(
-      shadowColor: Colors.brown,
-        backgroundColor: Color(0xFFE4C59E),
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFFAF8260)),
-              child: ListView(
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Color(0xFFE4C59E),
-                      ),
-                      SizedBox(width: 150),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.edit, color: Color(0xFF5C260D)),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Kenana Jarroud\nkenana@gmail.com",
-                    style: TextStyle(
-                      color: Color(0xFF5C260D),
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              title: Text(
-                "settings",
-                style: TextStyle(color: Color(0xFF5C260D)),
-              ),
-              leading: Icon(Icons.settings, color: Color(0xFFAF8260)),
-            ),
-            Divider(color: Color(0xFFAF8260), thickness: 0.5),
-            ListTile(
-              title: Text("Theme", style: TextStyle(color: Color(0xFF5C260D))),
-              leading: Icon(Icons.brightness_6, color: Color(0xFFAF8260)),
-            ),
-            Divider(color: Color(0xFFAF8260), thickness: 0.5),
-            ListTile(
-              title: Text(
-                "Language",
-                style: TextStyle(color: Color(0xFF5C260D)),
-              ),
-              leading: Icon(Icons.language, color: Color(0xFFAF8260)),
-            ),
-            Divider(color: Color(0xFFAF8260), thickness: 0.5),
-            ListTile(
-              title: Text("Logout", style: TextStyle(color: Color(0xFF5C260D))),
-              leading: Icon(Icons.logout, color: Color(0xFFAF8260)),
-            ),
-          ],
-        ),
-      ),
+     drawer: Draweruser(),
   
 
       

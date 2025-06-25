@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Personalpage extends StatefulWidget {
   const Personalpage({super.key});
@@ -8,31 +9,46 @@ class Personalpage extends StatefulWidget {
 }
 
 class _PersonalpageState extends State<Personalpage> {
+  String userName = 'Guest';
+  String userEmail = '';
+
+  @override
+  void initState() {
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    setState(() {
+      userEmail = user?.email ?? '';
+      userName = user?.displayName ?? 'Guest';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFE3BF),
+      backgroundColor: const Color(0xFFFFE3BF),
       body: ListView(
         children: [
           Container(
             height: 130,
-
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
               color: Color(0xF2541C03),
             ),
-
             child: Row(
               children: [
-                SizedBox(width: 20),
-                CircleAvatar(radius: 30),
-                SizedBox(width: 30),
+                const SizedBox(width: 20),
+                const CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Color(0xFF5C260D),
+                  child: Icon(Icons.person, size: 40, color: Color(0xFFD1AE8D)),
+                ),
+                const SizedBox(width: 30),
                 Text(
-                  "Kenana Jarroud\nkenana@gmail.com",
-                  style: TextStyle(
+                  "$userName\n$userEmail",
+                  style: const TextStyle(
                     color: Color(0xFFD1AE8D),
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -41,21 +57,20 @@ class _PersonalpageState extends State<Personalpage> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             child: Row(
               children: [
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: 150,
                   height: 30,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xF2541C03),
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
-
                   child: Row(
-                    children: [
+                    children: const [
                       SizedBox(width: 10),
                       Icon(Icons.book_outlined, color: Color(0xFFD1AE8D)),
                       Text(
@@ -69,16 +84,15 @@ class _PersonalpageState extends State<Personalpage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   width: 150,
                   height: 30,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xF2541C03),
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
-
                   child: Row(
-                    children: [
+                    children: const [
                       SizedBox(width: 10),
                       Icon(Icons.favorite_border, color: Color(0xFFD1AE8D)),
                       Text(
@@ -94,10 +108,7 @@ class _PersonalpageState extends State<Personalpage> {
               ],
             ),
           ),
-          SizedBox(height: 200,),
-      
-      
-          
+          const SizedBox(height: 200),
         ],
       ),
     );

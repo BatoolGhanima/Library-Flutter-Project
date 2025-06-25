@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_app/pages/PdfViewerPage.dart';
-import '../modules/item.dart'; // تأكد من استيراد نموذج Book
+import '../modules/Book.dart'; // تأكد من استيراد نموذج Book
 
 class DetailsPage extends StatefulWidget {
   final Book book; // إضافة متغير لاستقبال بيانات الكتاب

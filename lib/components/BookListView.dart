@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../modules/item.dart';
+import 'package:library_app/modules/Book.dart';
 import '../pages/DetailsPage.dart';
 
-class BookListView extends StatefulWidget {
-  const BookListView({super.key});
 
-  @override
-  State<BookListView> createState() => _BookListViewState();
-}
+class BookListView extends StatelessWidget {
+  final List<Book>? books; // ممكن تكون null => نعرض من Firebase
 
-class _BookListViewState extends State<BookListView> {
-  final CollectionReference booksRef = FirebaseFirestore.instance.collection('books');
-  List<Book> favoriteBook = [];
+  const BookListView({super.key, this.books});
 
   @override
   Widget build(BuildContext context) {
+    if (books != null) {
+      if (books!.isEmpty) return Center(child: Text("No books found"));
+      return buildListView(books!);
+    }
+
+    final CollectionReference booksRef = FirebaseFirestore.instance.collection('books');
+
     return StreamBuilder<QuerySnapshot>(
       stream: booksRef.snapshots(),
       builder: (context, snapshot) {
@@ -32,56 +34,53 @@ class _BookListViewState extends State<BookListView> {
           return Book.fromMap(doc.data() as Map<String, dynamic>);
         }).toList();
 
-        return ListView.builder(
-          itemCount: books.length,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(), // حتى لا يحصل تصادم Scroll
-          itemBuilder: (context, index) {
-            final book = books[index];
-            return Card(
-              color: const Color.fromARGB(189, 233, 192, 162),
+        return buildListView(books);
+      },
+    );
+  }
+
+  Widget buildListView(List<Book> books) {
+    return ListView.builder(
+      itemCount: books.length,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final book = books[index];
+        return Card(
+          color: const Color.fromARGB(189, 233, 192, 162),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 5,
+          margin: EdgeInsets.all(20),
+          child: ListTile(
+            contentPadding: EdgeInsets.all(16),
+            leading: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              elevation: 5,
-              margin: EdgeInsets.all(20),
-              child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                leading: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Image.network(book.image, width: 75, height: 75, fit: BoxFit.cover),
-                ),
-                title: Text(
-                  book.name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 125, 39, 0),
-                    fontSize: 20,
-                  ),
-                ),
-                subtitle: Text(
-                  book.author,
-                  style: TextStyle(color: Colors.white),
-                ),
-                trailing: IconButton(
-                  onPressed: () {
-                   setState(() {
-                     favoriteBook.add(book);
-                   });
-                  },
-                  icon: Icon(Icons.favorite_border_outlined, color:Color.fromARGB(255, 125, 39, 0) , size: 40,),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DetailsPage(book: book)),
-                  );
-                },
+              child: Image.network(book.image, width: 75, height: 75, fit: BoxFit.cover),
+            ),
+            title: Text(
+              book.name,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 125, 39, 0),
+                fontSize: 20,
               ),
-            );
-          },
+            ),
+            subtitle: Text(
+              book.author,
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: Icon(Icons.favorite_border_outlined, color:Color.fromARGB(255, 125, 39, 0), size: 40),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DetailsPage(book: book)),
+              );
+            },
+          ),
         );
       },
     );

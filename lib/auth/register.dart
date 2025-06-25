@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:library_app/auth/auth_service.dart';
 import 'package:library_app/auth/login.dart';
 
-// import 'package:libraryproject/screens/home.dart';
-
 class Register extends StatefulWidget {
   const Register({super.key});
 
@@ -12,15 +10,29 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   void signUpUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
+    final name = nameController.text.trim();
 
     final user = await AuthService().signUp(email, password);
     if (user != null) {
+      // تحديث اسم المستخدم في Firebase Authentication
+      await user.updateDisplayName(name);
+      await user.reload();
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Login()),
@@ -37,6 +49,7 @@ class _RegisterState extends State<Register> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color.fromARGB(255, 85, 63, 46),
       body: Stack(
         children: [
@@ -68,18 +81,21 @@ class _RegisterState extends State<Register> {
                   ),
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(75)),
                 ),
-                child: Column(
+                child: ListView(
                   children: [
                     SizedBox(height: 20),
                     Text(
-                      "SING UP",
+                      "SIGN UP",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
+                        
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: const Color.fromARGB(255, 71, 47, 38),
                       ),
                     ),
                     Text(
+                      textAlign: TextAlign.center,
                       "Welcome To LibBook !",
                       style: TextStyle(
                         fontSize: 15,
@@ -87,32 +103,39 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(horizontal: 25),
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.white,
-                    //       borderRadius: BorderRadius.circular(15),
-                    //     ),
-                    //     child: Padding(
-                    //       padding: EdgeInsets.symmetric(horizontal: 5),
-                    //       child: TextField(
-                    //         decoration: InputDecoration(
-                    //           suffixIcon: Icon(
-                    //             Icons.person,
-                    //             color: Colors.brown,
-                    //           ),
-                    //           border: InputBorder.none,
-                    //           hintText: "Enter Your Name",
-                    //           hintStyle: TextStyle(
-                    //             color: Color.fromARGB(148, 184, 145, 115),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 10),
+
+                    // حقل إدخال الاسم
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 107, 79, 66),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: TextField(
+                            style: TextStyle(color: Colors.white),
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.person,
+                                color: Colors.white,
+                              ),
+                              border: InputBorder.none,
+                              hintText: "Enter Your Name",
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+
+                    // حقل البريد الإلكتروني
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
@@ -142,6 +165,8 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(height: 10),
+
+                    // حقل كلمة السر
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
@@ -172,6 +197,8 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(height: 10),
+
+                    // حقل تأكيد كلمة السر (يمكن تعديلها لاحقاً للتأكد)
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25),
                       child: Container(
@@ -190,7 +217,7 @@ class _RegisterState extends State<Register> {
                                 color: Colors.white,
                               ),
                               border: InputBorder.none,
-                              hintText: "confirm password",
+                              hintText: "Confirm Password",
                               hintStyle: TextStyle(
                                 fontSize: 12,
                                 color: Colors.white,
@@ -201,6 +228,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(height: 20),
+
                     Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -225,18 +253,24 @@ class _RegisterState extends State<Register> {
                             ),
                           ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
-                          child: TextButton(
-                            onPressed: signUpUser,
-                            child: Text(
-                              "Sing Up",
-                              style: TextStyle(color: Color(0xFFFFE4C4)),
+                        child: SizedBox(
+                        
+                          child: Padding(
+                            
+                            padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
+                            child: TextButton(
+                              
+                              onPressed: signUpUser,
+                              child: Text(
+                                "Sign Up",
+                                style: TextStyle(color: Color(0xFFFFE4C4)),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -249,7 +283,7 @@ class _RegisterState extends State<Register> {
                             );
                           },
                           child: Text(
-                            "login",
+                            "Login",
                             style: TextStyle(
                               color: const Color.fromARGB(255, 104, 69, 56),
                             ),

@@ -22,7 +22,21 @@ Map<String , dynamic> toMap(){
 
   };
 }
-factory Book.fromMap(Map<String , dynamic> map){
-  return Book(name: map['name'], author: map['author'], category: map['category'], image: map['image'], about: map['about'], count: map['count'], date: map['date'], pdfUrl: map['pdfUrl']);
+factory Book.fromMap(Map<String, dynamic> map) {
+  return Book(
+    name: map['name'] ?? '',
+    author: map['author'] ?? '',
+    category: map['category'] ?? '',
+    image: map['image'] ?? 'https://via.placeholder.com/150', 
+    about: map['about'] ?? '',
+    count: map['count'] is int
+        ? map['count']
+        : int.tryParse(map['count']?.toString() ?? '1') ?? 1,
+    date: map['date'] is int
+        ? map['date']
+        : int.tryParse(map['date']?.toString() ?? '2024') ?? 2024,
+    pdfUrl: map['pdfUrl'] ?? '',
+  );
 }
+
 }
