@@ -230,6 +230,7 @@ class _RegisterState extends State<Register> {
                     SizedBox(height: 20),
 
                     Card(
+                      margin: EdgeInsets.only(left: 100, right: 100),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

@@ -163,6 +163,8 @@ class _LoginState extends State<Login> {
 
                       SizedBox(height: 30),
                       Card(
+                                              margin: EdgeInsets.only(left: 100, right: 100),
+
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
